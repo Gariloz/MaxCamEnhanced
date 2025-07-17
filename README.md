@@ -1,6 +1,6 @@
 # MaxCamEnhanced (WotLK 3.3.5a)
 
-**MaxCamEnhanced** is an addon for World of Warcraft 3.3.5a that allows you to flexibly control the maximum camera distance, automatically adjust it based on location type (instances, PvP, cities, open world, etc.), and synchronize settings across all characters and accounts. Includes a user-friendly Ace3-based configuration and supports both English and Russian.
+**MaxCamEnhanced** is an addon for World of Warcraft 3.3.5a that gives you advanced control over the maximum camera distance, with smart auto-detection by zone type and unified settings for all characters.
 
 ## Main Features
 
@@ -10,7 +10,7 @@
 * Unified settings for all characters and accounts (optional)
 * Per-character profiles
 * Easy configuration via interface menu or `/maxcam`, `/mc` commands
-* Localization: English and Russian
+* English and Russian localization
 
 ## Installation
 
@@ -23,6 +23,6 @@
 
 ---
 
-Original author: Gariloz
+**Original author:** Gariloz
 
-Modifications and support: Gariloz 
+**Modifications and support:** Gariloz 
