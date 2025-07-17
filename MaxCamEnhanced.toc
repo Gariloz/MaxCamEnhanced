@@ -1,0 +1,19 @@
+## Interface: 30300
+## Title: MaxCam Enhanced
+## Notes: Advanced camera distance control with configurable settings and user interface.
+## Author: Enhanced Version
+## Version: 2.0
+## SavedVariables: MaxCamEnhancedDB
+
+# Ace3 libraries
+Libs\Ace3\AceAddon-3.0\AceAddon-3.0.xml
+Libs\Ace3\AceEvent-3.0\AceEvent-3.0.xml
+Libs\Ace3\AceConsole-3.0\AceConsole-3.0.xml
+Libs\Ace3\AceConfig-3.0\AceConfig-3.0.xml
+Libs\Ace3\AceConfigDialog-3.0\AceConfigDialog-3.0.xml
+Libs\Ace3\AceDB-3.0\AceDB-3.0.xml
+
+MaxCamEnhanced_Locale.lua
+MaxCamEnhanced_Zones.lua
+MaxCamEnhanced.lua
+MaxCamEnhanced_Config.lua
