@@ -192,11 +192,21 @@ local function getGeneralOptions()
                     MaxCamEnhanced:UpdateCurrentValues()
                 end,
             },
+            restoreGameDefaults = {
+                type = "execute",
+                name = L["Restore Game Defaults"] or "Restore Game Defaults",
+                desc = L["Restore camera distance to game default (15) - useful when addon is disabled"] or "Restore camera distance to game default (15) - useful when addon is disabled",
+                order = 17,
+                func = function()
+                    MaxCamEnhanced:RestoreDefaults()
+                    MaxCamEnhanced:UpdateCurrentValues()
+                end,
+            },
 
             spacer3 = {
                 type = "header",
                 name = L["Current Status"] or "Current Status",
-                order = 17,
+                order = 19,
             },
             currentValues = {
                 type = "description",
@@ -286,7 +296,7 @@ local function getGeneralOptions()
 
                     return text
                 end,
-                order = 18,
+                order = 19,
             },
 
     }
@@ -618,7 +628,7 @@ function MaxCamEnhanced.InitializeConfig()
     local originalHide = InterfaceOptionsFrame.Hide
     InterfaceOptionsFrame.Hide = function(self)
         -- Применяем настройки когда интерфейс закрывается
-        if MaxCamEnhanced and MaxCamEnhanced.ApplySettings then
+        if MaxCamEnhanced and MaxCamEnhanced.ApplySettings and MaxCamEnhanced.db.profile.enabled then
             MaxCamEnhanced:ApplySettings()
         end
         originalHide(self)

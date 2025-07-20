@@ -166,6 +166,19 @@ function MaxCamEnhanced:PLAYER_ENTERING_WORLD()
     -- Применяем настройки камеры для этого персонажа
     if self.db.profile.enabled then
         self:ApplyCameraSettings()
+        
+        -- Дополнительная проверка через 2 секунды
+        RunAfter(2, function()
+            if self.db.profile.enabled then
+                local currentDistance = GetCVar("cameraDistanceMax")
+                local targetDistance = self.db.profile.cameraDistance
+                
+                if currentDistance and targetDistance and math.abs(tonumber(currentDistance) - targetDistance) > 0.1 then
+                    -- Если настройки не применились, принудительно применяем
+                    self:ForceApplyCameraSettings()
+                end
+            end
+        end)
     end
 
     -- Отменяем регистрацию события после первого применения
@@ -374,7 +387,8 @@ function MaxCamEnhanced:ApplyCameraSettings()
         ConsoleExec("cvar_save")
     end
 
-    -- Настройки применяются тихо как MouseSpeedEnhanced
+    -- Принудительно применяем настройки камеры
+    self:ForceApplyCameraSettings()
 end
 
 -- Применяем только настройки камеры (для ручного применения) - как MouseSpeedEnhanced
@@ -403,7 +417,8 @@ function MaxCamEnhanced:ApplyCameraSettingsOnly()
         ConsoleExec("cvar_save")
     end
 
-    -- Настройки применяются тихо как MouseSpeedEnhanced
+    -- Принудительно применяем настройки камеры
+    self:ForceApplyCameraSettings()
 end
 
 -- Принудительно применяем настройки камеры даже когда аддон отключен (для ручной кнопки Применить)
@@ -425,8 +440,14 @@ function MaxCamEnhanced:ForceApplyCameraSettings()
         pcall(SetCVar, "cameraDistanceMaxFactor", factor)
     end
 
-    -- Сохраняем в WTF файлы
+    -- Принудительно применяем через консольные команды
+    ConsoleExec("CameraDistanceMax " .. distance)
+    ConsoleExec("CameraSavedDistance " .. distance)
     ConsoleExec("cvar_save")
+
+    -- Принудительно обновляем камеру
+    CameraZoomIn(0.1)
+    CameraZoomOut(0.1)
 
     self:Print(L["Camera settings applied manually"] or "Camera settings applied manually")
 end
@@ -484,18 +505,20 @@ function MaxCamEnhanced:ApplySettings()
     if self.db.profile.enabled then
         self:ApplyCameraSettings()
     else
-        -- Сбрасываем к стандартному расстоянию камеры WoW
-        SetCVar("cameraDistanceMax", GAME_DEFAULT_CAMERA_DISTANCE)
-        SetCVar("cameraSavedDistance", GAME_DEFAULT_CAMERA_DISTANCE)
-        -- Сбрасываем фактор к 1 (по умолчанию)
-        ConsoleExec("CameraDistanceMaxFactor 1")
-        ConsoleExec("cvar_save")
+        -- Когда аддон отключен, НЕ сбрасываем настройки автоматически
+        -- Пользователь может применить настройки вручную через кнопку "Применить"
+        -- Только если настройки не были применены вручную, сбрасываем к стандартным
+        local currentDistance = GetCVar("cameraDistanceMax")
+        local targetDistance = self.db.profile.cameraDistance
+        
+        -- Если текущее расстояние отличается от целевого, применяем настройки
+        if currentDistance and targetDistance and math.abs(tonumber(currentDistance) - targetDistance) > 0.1 then
+            self:ForceApplyCameraSettings()
+        end
     end
 
     -- Принудительно сохраняем настройки в базу данных
     self:SaveSettings()
-
-    -- Настройки применяются тихо как MouseSpeedEnhanced
 end
 
 -- Восстанавливаем стандартные игровые значения (когда настройки отключены)
@@ -507,10 +530,14 @@ function MaxCamEnhanced:RestoreDefaults()
     -- Сбрасываем фактор к 1 (по умолчанию)
     ConsoleExec("CameraDistanceMaxFactor 1")
 
-
-
-    -- Принудительно сохраняем
+    -- Принудительно применяем через консольные команды
+    ConsoleExec("CameraDistanceMax " .. GAME_DEFAULT_CAMERA_DISTANCE)
+    ConsoleExec("CameraSavedDistance " .. GAME_DEFAULT_CAMERA_DISTANCE)
     ConsoleExec("cvar_save")
+
+    -- Принудительно обновляем камеру
+    CameraZoomIn(0.1)
+    CameraZoomOut(0.1)
 
     -- Настройки применяются тихо
 end
