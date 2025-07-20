@@ -387,8 +387,14 @@ function MaxCamEnhanced:ApplyCameraSettings()
         ConsoleExec("cvar_save")
     end
 
-    -- Принудительно применяем настройки камеры
-    self:ForceApplyCameraSettings()
+    -- Принудительно применяем через консольные команды
+    ConsoleExec("CameraDistanceMax " .. distance)
+    ConsoleExec("CameraSavedDistance " .. distance)
+    ConsoleExec("cvar_save")
+
+    -- Принудительно обновляем камеру
+    CameraZoomIn(0.1)
+    CameraZoomOut(0.1)
 end
 
 -- Применяем только настройки камеры (для ручного применения) - как MouseSpeedEnhanced
@@ -417,8 +423,14 @@ function MaxCamEnhanced:ApplyCameraSettingsOnly()
         ConsoleExec("cvar_save")
     end
 
-    -- Принудительно применяем настройки камеры
-    self:ForceApplyCameraSettings()
+    -- Принудительно применяем через консольные команды
+    ConsoleExec("CameraDistanceMax " .. distance)
+    ConsoleExec("CameraSavedDistance " .. distance)
+    ConsoleExec("cvar_save")
+
+    -- Принудительно обновляем камеру
+    CameraZoomIn(0.1)
+    CameraZoomOut(0.1)
 end
 
 -- Принудительно применяем настройки камеры даже когда аддон отключен (для ручной кнопки Применить)
