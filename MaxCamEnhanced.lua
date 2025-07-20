@@ -517,16 +517,8 @@ function MaxCamEnhanced:ApplySettings()
     if self.db.profile.enabled then
         self:ApplyCameraSettings()
     else
-        -- Когда аддон отключен, НЕ сбрасываем настройки автоматически
-        -- Пользователь может применить настройки вручную через кнопку "Применить"
-        -- Только если настройки не были применены вручную, сбрасываем к стандартным
-        local currentDistance = GetCVar("cameraDistanceMax")
-        local targetDistance = self.db.profile.cameraDistance
-        
-        -- Если текущее расстояние отличается от целевого, применяем настройки
-        if currentDistance and targetDistance and math.abs(tonumber(currentDistance) - targetDistance) > 0.1 then
-            self:ForceApplyCameraSettings()
-        end
+        -- Когда аддон отключен, сбрасываем к стандартным игровым значениям
+        self:RestoreDefaults()
     end
 
     -- Принудительно сохраняем настройки в базу данных

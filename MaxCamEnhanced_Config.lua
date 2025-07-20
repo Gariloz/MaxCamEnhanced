@@ -37,8 +37,8 @@ local function set(info, value)
             -- Расстояние камеры включено: применяем текущие настройки
             MaxCamEnhanced:ApplySettings()
         else
-            -- Расстояние камеры отключено: НЕ сбрасываем настройки автоматически
-            -- Пользователь может применить настройки вручную через кнопку "Применить"
+            -- Расстояние камеры отключено: восстанавливаем стандартные игровые значения
+            MaxCamEnhanced:RestoreDefaults()
         end
         MaxCamEnhanced:UpdateCurrentValues()
     -- Специальная обработка для переключения autoDetectDistance
