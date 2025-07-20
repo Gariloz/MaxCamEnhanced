@@ -192,21 +192,12 @@ local function getGeneralOptions()
                     MaxCamEnhanced:UpdateCurrentValues()
                 end,
             },
-            restoreGameDefaults = {
-                type = "execute",
-                name = L["Restore Game Defaults"] or "Restore Game Defaults",
-                desc = L["Restore camera distance to game default (15) - useful when addon is disabled"] or "Restore camera distance to game default (15) - useful when addon is disabled",
-                order = 17,
-                func = function()
-                    MaxCamEnhanced:RestoreDefaults()
-                    MaxCamEnhanced:UpdateCurrentValues()
-                end,
-            },
+
 
             spacer3 = {
                 type = "header",
                 name = L["Current Status"] or "Current Status",
-                order = 19,
+                order = 17,
             },
             currentValues = {
                 type = "description",
@@ -296,7 +287,7 @@ local function getGeneralOptions()
 
                     return text
                 end,
-                order = 19,
+                order = 18,
             },
 
     }
